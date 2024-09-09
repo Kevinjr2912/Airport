@@ -39,6 +39,7 @@ exports.reserveFlight =[(req, res) =>{
 
   db.query(
     'INSERT INTO reservations (id_flight, id_reservation_status, id_usuario, reservation_number, reservation_date) VALUES (?, ?, ?, ?, ?)',
+    [id_flight, id_reservation_status, id_usuario, reservation_number, reservation_date],
     (err, result) => {
         if (err) {
             console.log(err);
@@ -50,16 +51,3 @@ exports.reserveFlight =[(req, res) =>{
 );
 
 }];
-
-exports.knowReservationStatus = (req,res) => {
-  const{numberReservation,nameUser,date} = req.body;
-
-  db.query('SELECT reser.reservation_number,reserst.status,users.first_name,users.first_surname,users.middle_surname FROM reservations reser INNER JOIN reservationstatus reserst ON reserst.id_reservation_status = reser.id_reservation_status INNER JOIN users users ON reser.id_user = users.id_user WHERE reser.reservation_number = ? OR (users.first_name = ? AND reser.reservation_date = ?)',[numberReservation,nameUser,date],(err,result)=>{
-    if(err){
-      console.log(err)
-      return res.status(500).send("Error al consultar el estado de dicha reserva");
-    }
-
-    res.json(result);
-  })
-} 

@@ -18,7 +18,7 @@ db.connect((err) => {
   if (err) {
     throw err;
   }
-  console.log("Conexión al modulo reservations establecida");
+  console.log("Conexión al modulo flights establecida");
 });
 
 exports.searchFlights = (req,res) => {

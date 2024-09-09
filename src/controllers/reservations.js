@@ -31,3 +31,22 @@ exports.cancelReservations = [(req, res) => {
         res.status(201).json({message: "Reserva cancelada"})
     });
 }];
+
+exports.reserveFlight =[(req, res) =>{
+
+  const { id_flight, id_reservation_status, reservation_number, reservation_date } = req.body;
+  const userId = req.params.id;
+
+  db.query(
+    'INSERT INTO reservations (id_flight, id_reservation_status, id_usuario, reservation_number, reservation_date) VALUES (?, ?, ?, ?, ?)',
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ error: 'Error making the reservation' });
+            return;
+        }
+        res.status(201).json({ message: ' Reservation made successfully' });
+    }
+);
+
+}];
